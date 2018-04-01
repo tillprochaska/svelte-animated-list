@@ -1,0 +1,84 @@
+<div class="controls">
+    <button on:click="add()">Add</button>
+    <button on:click="remove()">Remove</button>
+    <button on:click="shuffle()">Shuffle</button>
+    <button on:click="reset()">Reset</button>
+</div>
+
+<div class="wrapper">
+    <List ref:list items="{{ items }}" duration="500" easing="ease-in-out">
+        {{ #each items as item @id }}
+            <Item key="{{ item.id }}">
+                <div class="box">{{ item.id }}</div>
+            </Item>
+        {{ /each }}
+    </List>
+</div>
+
+<script>
+    import { List, Item } from '../../../src/index.js';
+
+    export default {
+
+        components: {
+            List,
+            Item,
+        },
+
+        data() {
+            return {    
+                items: [3, 2, 1].map(i => ({ id: i })),
+            };
+        },
+
+        methods: {
+
+            add() {
+                let items = this.get('items');
+                items.unshift({ id: items.length + 1 });
+                this.set({ items });
+            },
+
+            remove() {
+                let items = this.get('items');
+                items.shift();
+                this.set({ items });
+            },
+
+            shuffle() {
+                let items = this.get('items').sort(function() { return 0.5 - Math.random() });
+                this.set({ items });
+            },
+
+            reset() {
+                this.set({
+                    items: [3, 2, 1].map(i => ({ id: i })),
+                });
+            },
+
+        },
+
+    }
+</script>
+
+<style>
+    .controls {
+        padding: .5rem;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 500px;
+    }
+
+    .box {
+        box-sizing: border-box;
+        width: 33.333%;
+        padding: 2rem;
+        background-color: #eee;
+        border: 1px solid #fff;
+        font-size: 2rem;
+        text-align: center;
+    }
+</style>

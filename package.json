@@ -1,0 +1,20 @@
+{
+  "name": "svelte-animated-list",
+  "version": "0.1.0",
+  "main": "src/index.js",
+  "author": "Till Prochaska <mail@tillprochaska.de>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "devDependencies": {
+    "rollup": "^0.57.1",
+    "rollup-plugin-buble": "^0.19.2",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-svelte": "^4.0.0",
+    "rollup-plugin-uglify": "^3.0.0",
+    "svelte": "^1.59.0"
+  }
+}

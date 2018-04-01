@@ -1,0 +1,56 @@
+<div
+    ref:item
+    class="svelte-animated-list-item {{ isHiding ? 'is-hiding' : '' }}"
+    data-key="{{ key }}"
+>
+    <slot></slot>
+</div>
+
+<style>
+    .svelte-animated-list-item {
+        display: contents;
+    }
+</style>
+
+<script>
+    export default {
+
+        data() {
+            return {
+                isHiding: false,
+            };
+        },
+
+        oncreate() {
+            let findListWrapper = () => {
+                let wrapper = this.refs.item;
+                while(!wrapper.classList.contains('svelte-animated-list-wrapper')) {
+                    wrapper = wrapper.parentElement;
+                }
+                return wrapper;
+            }
+
+            let duration = parseInt(findListWrapper().dataset.duration);
+
+            let unmount = this._fragment.u;
+            this._fragment.u = () => {
+                this.refs.item.dataset.isHiding = true;
+                let child = this.refs.item.children[0];
+                let rect = child.getBoundingClientRect();
+
+                Object.assign(child.style, {
+                    position: 'absolute',
+                    top: rect.top + 'px',
+                    left: rect.left + 'px',
+                    width: rect.width + 'px',
+                    height: rect.height + 'px',
+                });
+
+                window.setTimeout(() => {
+                    unmount();
+                }, duration);
+            };
+        },
+
+    }
+</script>
